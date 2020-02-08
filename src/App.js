@@ -1,26 +1,25 @@
 import React, { Component, useState } from 'react';
 import './App.css';
 import data from './data.json';
-import Result from './Result';
 import { Link, Route, BrowserRouter as Router } from "react-router-dom";
 
 
 
 class App extends Component {
-  /* id password state값 으로 정의 */
+  /* required state declaration */
   state = {
     sub1: '', sub2: '', sub3: '', sub4: '', sub5: '', sub6: '', sub7: '', sub8: '', grade: '1학년',
     res1: 'default', res2: 'default', res3: 'default', res4: 'default', res5: 'default', res6: 'default', res7: 'default', res8: 'default',
     subName1 :'', subName2 :'', subName3 :'', subName4 :'', subName5 :'', subName6 :'', subName7 :'', subName8 :'',
     isActive1: false, isActive2: false, isActive3: false, isActive4: false, isActive5: false, isActive6: false, isActive7: false, isActive8: false
   }
-  /* input value 변경 ==> onChange */
+  /* listener to input value modification */
   appChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value
     });
   }
-  /* 로그인 버튼 클릭 ==> onClick */
+  /* login button click listener */
   appClick = async () => {
     console.log(` sub1 : ${this.state.sub1}\n sub2 : ${this.state.sub2}\n sub3 : ${this.state.sub3}\n sub4 : ${this.state.sub4}\n sub5 : ${this.state.sub5}\n sub6 : ${this.state.sub6}\n sub7 : ${this.state.sub7}\n sub8 : ${this.state.sub8}`);
     console.log(` \n grade: ${this.state.grade}`)
@@ -34,10 +33,12 @@ class App extends Component {
     }
   }
 
+  /* set 'isActive' to true when clicked -> display check result */
    getResultWindow = () => {
     this.setState({isActive: true});  
   };
 
+  /* returns grade quota(ex. quota1 if freshman) */
   calcGradeQuota = async (grade, course) => {
     switch(grade){
       case '1': return course.quota1;
@@ -48,6 +49,7 @@ class App extends Component {
     }
   }
 
+  /* returns grade register count(ex. reg1 if freshman) */
   calcGradeReg = async (grade, course) => {
     switch(grade){
       case '1': return course.reg1;
@@ -58,6 +60,7 @@ class App extends Component {
     }
   }
 
+  /* check if user is added to course based of quota and register count */
   checkForSub = async (course, grade) => {
     let gradeQuota = await this.calcGradeQuota(grade, course)
     let gradeReg = await this.calcGradeReg(grade, course)
@@ -71,7 +74,7 @@ class App extends Component {
     
   }
 
-
+  /* loop to find subjects matching users' input */
   checkResult = async () => {
     const { sub1, sub2, sub3, sub4, sub5, sub6, sub7, sub8, grade} = this.state;
     
@@ -139,7 +142,7 @@ class App extends Component {
 
   }
 
-
+  /* jsx part */
   render() {
     const { sub1, sub2, sub3, sub4, sub5, sub6, sub7, sub8, grade} = this.state;
     const { appChange, appClick, appKeyPress} = this;
@@ -212,7 +215,7 @@ class App extends Component {
             <font size ="3">Academic English, 자유정의진리, 1학년세미나 및 일부 과목은 수강신청 사이트에 정보가 없어 조회 불가능합니다</font>
 
 
-            
+
           </pre>
 
           
